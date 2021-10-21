@@ -32,6 +32,23 @@ class PlacaController extends Controller
     public function salvar(Request $request, $id)
     {
 
+        $request->validate([
+            'numero' => 'required',
+            'resp' => 'required',
+            'contato' => 'required',
+            'tipo' => 'required',
+            'data' => 'required',
+
+        ], [
+            'numero.required' => 'O numero é obrigatório',
+            'resp.required' => 'O Responsavel é obrigatório',
+            'contato.required' => 'O contato é obrigatório',
+            'tipo.required' => 'O tipo é obrigatório',
+            'data.required' => 'A dara é obrigatório',
+
+        ]);
+
+
         if ($id == 0) {
             $placa = new Placa();
             $placa->numero = $request->input('numero');

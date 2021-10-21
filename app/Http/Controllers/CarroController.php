@@ -25,6 +25,22 @@ class CarroController extends Controller
 
     public function salvar(Request $request, $id)
     {
+
+        $request->validate([
+            'nome' => 'required',
+            'marca' => 'required',
+            'km' => 'required',
+            'placa_id' => 'required',
+
+        ], [
+            'nome.required' => 'O Nome é obrigatório',
+            'marca.required' => 'A marca é obrigatório',
+            'km.required' => 'O KM é obrigatório',
+            'placa_id.required' => 'A Placa é obrigatório',
+
+
+        ]);
+
         if ($id == 0) {
             $carro = new Carro();
             $carro->nome = $request->input('nome');

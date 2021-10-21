@@ -15,21 +15,33 @@
 @endsection
 
 @section('form')
-    <form class="form-group" action="{{ action('PlacaController@salvar', 0) }}" method="post" enctype="multipart/form-data">
+
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    <form class="form-group" action="{{ action('PlacaController@salvar', 0) }}" method="post"
+        enctype="multipart/form-data">
 
         @csrf
         <div class="row">
             <div class="col-md-4">
                 <label>Numero</label>
-                <input class="form-control" type="text" id="placa" name="numero" required>
+                <input class="form-control" type="text" id="placa" name="numero" value="{{ old('numero') }}">
             </div><br>
             <div class="col-md-4">
                 <label>Responsavel pela montagem</label>
-                <input class="form-control" type="text" name="resp" required>
+                <input class="form-control" type="text" name="resp" value="{{ old('resp') }}">
             </div><br>
             <div class="col-md-3">
                 <label>Contato</label>
-                <input class="form-control" type="text" id="telefone" name="contato" required>
+                <input class="form-control" type="text" id="telefone" name="contato" value="{{ old('contato') }}">
             </div><br>
         </div><br>
 
@@ -47,7 +59,7 @@
 
             <div class="col-md-4">
                 <label>Modelo</label>
-                <select class="form-control" name="tipo" value="tipo" required>
+                <select class="form-control" name="tipo" value="tipo" value="{{ old('tipo') }}">
                     <option>Tipo de Placa</option>
                     <option value="Mercosul">Mercosul</option>
                     <option value="Colecionador">Colecionador</option>
@@ -56,25 +68,32 @@
                 </select>
             </div><br>
 
+
         </div><br>
         <div class="row">
 
             <div class="col-md-4">
                 <label>Data da montagem</label>
-                <input class="form-control" type="date" id="date" name="data" required>
+                <input class="form-control" type="date" id="date" name="data" value="{{ old('data') }}">
             </div>
 
 
-        @php
-        !empty($placa->nome_arquivo) ? $nome_arquivo = $placa->nome_arquivo : $nome_arquivo = "sem_imagem.jpg";
-        @endphp
-        <div class="form-group col-md-5">
-            <label for="nome_arquivo">Imagem</label>
-            <input type="file" name="nome_arquivo" id="nome_arquivo" class="form-control"><br>
-            <label>Sua Imagem:</label><br>
-            <img src="/storage/imagem/{{$nome_arquivo}}" width="250px" />
-            <br>
-        </div> </div>
+            @php
+                !empty($placas->nome_arquivo) ? ($nome_arquivo = $placas->nome_arquivo) : ($nome_arquivo = 'sem_imagem.jpg');
+            @endphp
+
+            <div class=" col-md-4">
+                <label for="nome_arquivo">Imagem</label>
+                <input type="file" name="nome_arquivo" id="nome_arquivo" class="form-control">
+            </div>
+
+            <div class=" col-md-4">
+
+                <label>Sua Imagem:</label><br>
+                <img src="/storage/imagem/{{ $nome_arquivo }}" width="250px" />
+                <br>
+            </div>
+        </div>
 
         <br>
         <div class="col-md-6">

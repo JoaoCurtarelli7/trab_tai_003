@@ -38,6 +38,23 @@ class FabricaController extends Controller
 
         public function salvar(Request $request, $id)
         {
+
+            $request->validate([
+                'nome' => 'required',
+                'dono' => 'required',
+                'cidade' => 'required',
+                'CNPJ' => 'required',
+
+            ], [
+                'nome.required' => 'O Nome é obrigatório',
+                'dono.required' => 'O Dono é obrigatório',
+                'cidade.required' => 'A cidade é obrigatório',
+                'CNPJ.required' => 'O CNPJ é obrigatório',
+
+
+
+            ]);
+
             if ($id == 0) {
                 $fabrica = new Fabrica();
                 $fabrica->nome = $request->input('nome');
