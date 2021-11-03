@@ -20,10 +20,7 @@
                 <a href="{{ action('PlacaController@cadastrar') }}" class="btn btn-success">
                     <i class="fas fa-plus-circle"></i> Cadastrar</a>
             </div>
-            <div class="col-3">
-                <a href="{{ action('PlacaController@listar') }}" class="btn btn-danger">
-                    <i class="fas fa-spinner"></i>  Atualizar</a>
-            </div>
+         
         </div>
 </div>
 </form>

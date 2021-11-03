@@ -2,17 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Placa;
 use App\Models\Fabrica;
-use Illuminate\Support\Facades\DB;
+use App\Models\Placa;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Database\Eloquent\Builder;
 
 class PlacaController extends Controller
 {
-
-
 
     public function listar()
     {
@@ -31,77 +27,45 @@ class PlacaController extends Controller
 
     public function salvar(Request $request, $id)
     {
-
-        $request->validate([
-            'numero' => 'required',
-            'resp' => 'required',
-            'contato' => 'required',
-            'tipo' => 'required',
-            'data' => 'required',
-
-        ], [
-            'numero.required' => 'O numero é obrigatório',
-            'resp.required' => 'O Responsavel é obrigatório',
-            'contato.required' => 'O contato é obrigatório',
-            'tipo.required' => 'O tipo é obrigatório',
-            'data.required' => 'A dara é obrigatório',
-
-        ]);
+        //dd($request->file('nome_arquivo'));
 
 
         if ($id == 0) {
-            $placa = new Placa();
-            $placa->numero = $request->input('numero');
-            $placa->resp = $request->input('resp');
-            $placa->fabri_id = $request->input('fabri_id');
-            $placa->contato = $request->input('contato');
-            $placa->tipo = $request->input('tipo');
-            $placa->data = $request->input('data');
-            $placa->nome_arquivo = $request->input('nome_arquivo');
 
-$placa->save();
-
-$request->session()->flash('success', "Registro Salvo com Sucesso!");
-
+            Validator::make($request->all(), Placa::rules(), Placa::message())->validate();
             $input = $request->all();
 
-        $image = $request->file("nome_arquivo");
-        if ($image) {
-            $nome_arquivo = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image = $request->file("nome_arquivo");
+            if ($image) {
+                $nome_arquivo = date('YmdHis') . "." . $image->getClientOriginalExtension();
 
-            $request->nome_arquivo->storeAs('public/imagem', $nome_arquivo);
+                $request->nome_arquivo->storeAs('public/imagem', $nome_arquivo);
 
-            $input['nome_arquivo'] = $nome_arquivo;
-        }
+                $input['nome_arquivo'] = $nome_arquivo;
+            }
+            // dd($input);
+
+            Placa::create($input);
             return redirect()->action('PlacaController@listar');
         } else {
 
-            Validator::make($request->all(), Placa::rules())->validate();
-
-            $placa = Placa::find($id);
-            $placa->numero = $request->input('numero');
-            $placa->resp = $request->input('resp');
-            $placa->fabri_id = $request->input('fabri_id');
-            $placa->contato = $request->input('contato');
-            $placa->tipo = $request->input('tipo');
-            $placa->data = $request->input('data');
-            $placa->nome_arquivo = $request->input('nome_arquivo');
-            $placa->save();
-            $request->session()->flash('success', "Registro Salvo com Sucesso!");
-
-
-
+            Validator::make($request->all(), Placa::rules(), Placa::message())->validate();
             $input = $request->all();
 
-        $image = $request->file("nome_arquivo");
-        if ($image) {
-            $nome_arquivo = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image = $request->file("nome_arquivo");
+            if ($image) {
+                $nome_arquivo = date('YmdHis') . "." . $image->getClientOriginalExtension();
 
-            $request->nome_arquivo->storeAs('public/imagem', $nome_arquivo);
+                $request->nome_arquivo->storeAs('public/imagem', $nome_arquivo);
 
-            $input['nome_arquivo'] = $nome_arquivo;
-        }
+                $input['nome_arquivo'] = $nome_arquivo;
+            }
+            // dd($input);
 
+            Placa::updateOrCreate(
+                ['id' => $request->id],
+                $input
+            );
 
             return redirect()->action('PlacaController@listar');
         }
@@ -113,7 +77,7 @@ $request->session()->flash('success', "Registro Salvo com Sucesso!");
 
         if (!empty($request->numero)) {
             $placas = Placa::where('numero', 'like', '%' . $numero . '%')->orderBy('numero')->paginate(20);
-        }else{
+        } else {
             $placas = Placa::where('numero', 'like', '%' . $numero . '%')->orderBy('numero')->paginate(20);
 
         }
@@ -136,8 +100,7 @@ $request->session()->flash('success', "Registro Salvo com Sucesso!");
         if (empty($placa)) {
             return '<h2>Houve um problema ao consultar o ID informado</h2>';
 
-
-       }
+        }
         $placa->delete();
 
         return redirect()->action('PlacaController@listar')->with('error', "Registro Removido com Sucesso!");

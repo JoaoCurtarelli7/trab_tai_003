@@ -20,12 +20,12 @@ class FabricaController extends Controller
             Mail::to('beninijoaovitor@gmail.com')
                 ->send(new SendMailFabrica($fabrica));
 
-            return \redirect()->action('fabrica.listar')->with('success', "E-mail enviado com Sucesso");
+            return \redirect()->action('FabricaController@listar')->with('success', "E-mail enviado com Sucesso");
             }
 
         public function listar()
         {
-            $fabrica = Fabrica::paginate(1);
+            $fabrica = Fabrica::paginate(3);
 
             return view('fabrica.listar')->with('fabricas', $fabrica);
         }
@@ -99,9 +99,9 @@ class FabricaController extends Controller
             $nome = $request->input('nome');
 
             if (!empty($request->nome)) {
-                $fabricas = Fabrica::where('nome', 'like', '%' . $nome . '%')->orderBy('nome')->paginate(20);
+                $fabricas = Fabrica::where('nome', 'like', '%' . $nome . '%')->orderBy('nome')->paginate(3);
             }else{
-                $fabricas = Fabrica::where('nome', 'like', '%' . $nome . '%')->orderBy('nome')->paginate(20);
+                $fabricas = Fabrica::where('nome', 'like', '%' . $nome . '%')->orderBy('nome')->paginate(3);
 
             }
 

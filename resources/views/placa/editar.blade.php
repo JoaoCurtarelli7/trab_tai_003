@@ -55,6 +55,23 @@
             <label>Data da montagem</label><br>
             <input class="form-control" type="date" name="data" value="{{ $placas->data }}"><br>
         </div>
+
+        @php
+        !empty($placas->nome_arquivo) ? ($nome_arquivo = $placas->nome_arquivo) : ($nome_arquivo = 'sem_imagem.jpg');
+    @endphp
+
+    <div class=" col-md-4">
+        <label for="nome_arquivo">Imagem</label>
+        <input type="file" name="nome_arquivo" id="nome_arquivo" class="form-control" value="{{ $placas->nome_arquivo }}">
+    </div>
+
+    <div class=" col-md-4">
+
+        <label>Sua Imagem:</label><br>
+        <img src="/storage/imagem/{{ $placas->nome_arquivo }}" width="250px" />
+        <br>
+    </div>
+
         </div>
         <br>
         <div class="col-md-6">
