@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+
 class Placa extends Model
 {
+
     protected $table = "placa";
 
-    public $timestamps = false;
+  //  public $timestamps = false;
     public static function rules()
     {
         return [
