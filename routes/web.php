@@ -29,7 +29,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/fabrica/salvar/{id}', 'FabricaController@salvar');
     Route::get('/fabrica/editar/{id}', 'FabricaController@editar');
     Route::get('/fabrica/deletar/{id}', 'FabricaController@deletar');
-    Route::post('/fabrica/pesquisar','FabricaController@pesquisar');
+    Route::any('/fabrica/pesquisar','FabricaController@pesquisar');
 
 
     Route::get('placa-pdf/{id}', 'PDF\GeralPDFController@Placa');

@@ -19,10 +19,7 @@
                 <a href="{{ action('FabricaController@cadastrar') }}" class="btn btn-success">
                     <i class="fas fa-plus-circle"></i> Cadastrar</a>
             </div>
-            <div class="col-3">
-                <a href="{{ action('FabricaController@listar') }}" class="btn btn-danger">
-                    <i class="fas fa-spinner"></i>  Atualizar</a>
-            </div>
+     
         </div>
 </div>
 </form>
@@ -57,7 +54,7 @@
                        href="{{ action('FabricaController@deletar', $item->id) }}"><i
                             class='fas fa-trash'></i></a>
 
-                            <a class="btn btn-outline-success" href="{{ action('FabricaController@sendEmail', $item->id) }}">77</a>
+                            <a class="btn btn-outline-success" href="{{ action('FabricaController@sendEmail', $item->id) }}">E-mail</a>
                 </td>
             </tr>
         @endforeach

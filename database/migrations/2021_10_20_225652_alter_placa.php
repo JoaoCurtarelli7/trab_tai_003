@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use phpDocumentor\Reflection\Types\Nullable;
 
 class AlterPlaca extends Migration
 {
@@ -14,7 +15,7 @@ class AlterPlaca extends Migration
     public function up()
     {
 Schema::table('placa', function(Blueprint $table){
-    $table->string('nome_arquivo', 150)->after('created_at');
+    $table->string('nome_arquivo', 150)->nullable()->after('created_at');
 });
 
     }
